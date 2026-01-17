@@ -12,6 +12,7 @@ using static boxMos.Scientific;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using boxMos.Terms;
 
 
 namespace boxMos
@@ -63,14 +64,18 @@ namespace boxMos
         }
         public string testExpression()
         {
+            //PolynomialTerm polynomialTerm = new PolynomialTerm([3,4,5,1,2]);
+            //string yea = polynomialTerm.ToMath("x");
             var exp = SyntheticDivision([1, 2, 3], 2);
-            double solved = EvaluatePolynomialFromList(exp, 2, 1);
-            string polynomial = ListToPolynomial(exp, 2, "x");
-            //string function = ListToPolynomial(exp, "x");
-            //var exp = Integral(function)
+            double solved = EvaluatePolynomial(1, exp, 2);
+            string polynomial = ExpressionToString(exp, "x");
+            ////string function = ListToPolynomial(exp, "x");
+            //List<double> integral = IndefiniteIntegral(exp, 0.0001);
+            ////var exp = Integral(function)
+            //string integralfunc = ListToIIntegral(integral, "x");
 
 
-            return polynomial + ", f(1) = " + solved.ToString();
+            return /*polynomial + ", indefinite integral = " + integralfunc.ToString()*/polynomial + ", " + solved;
         }
 
         protected override void Update(GameTime gameTime)
