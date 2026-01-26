@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace boxMos
 {
@@ -31,44 +33,53 @@ namespace boxMos
         //    return sum;
         //}
 
-        public static List<double> IndefiniteIntegral(List<double> f, double dx)
+        public static List<Term> IndefiniteIntegral(List<Term> f, double dx) // WE'RE FOCUSING ON THIS. HOW DO YOU GET ALL THE TERMS TOGETHER AND DO TS SHIT
         {
             List<double> indefCoefficients = new List<double>();
             for (int x = 0; x < f.Count; x++)
             {
-                indefCoefficients.Add(f[x] / ((f.Count - x) + 1));
+                if (f[x] is PolynomialTerm polynomial)
+                {
+                    indefCoefficients.Add(polynomial.coefficients[x] / ((f.Count - x) + 1));
+                }
+                else if (f[x] is RationalTerm rational)
+                {
+                    indefCoefficients.Add(rational.denominator); // numerator * ln(abs(denominator)) + C
+                }
             }
             indefCoefficients.Add(0);
-            return indefCoefficients;
-        }
-        public static List<double> polynomial_IndefiniteIntegral(List<double> f, double dx)
-        {
-            List<double> indefCoefficients = new List<double>();
-            for (int x = 0; x < f.Count; x++)
-            {
-                indefCoefficients.Add(f[x] / ((f.Count - x) + 1));
-            }
-            indefCoefficients.Add(0);
-            return indefCoefficients;
-        }
-        public static string ListToIIntegral(List<double> coefficients, string variable)
-        {
-            StringBuilder newFunction = new StringBuilder();
-            for (int x = 0; x < coefficients.Count; x++)
-            {
-                if (x == coefficients.Count - 1)
-                {
-                    newFunction.Append(coefficients[x] + $"{variable}+");
-                }
-                else
-                {
-                    newFunction.Append(coefficients[x] + $"{variable}^{coefficients.Count - x}+");
-                }
+            List<double> qCoefficients = divided.Take(divided.Count - 1).ToList();
 
+            var yea = new List<Term>
+            {
+                new PolynomialTerm(qCoefficients)
+            };
+            if (remainder != 0)
+            {
+                yea.Add(new RationalTerm(remainder, divideby));
             }
-            newFunction.Append("C");
-            return newFunction.ToString();
+            yea.Add(new ConstantTerm("C"));
+
+            return indefCoefficients;
         }
+        //public static string ListToIIntegral(List<double> coefficients, string variable)
+        //{
+        //    StringBuilder newFunction = new StringBuilder();
+        //    for (int x = 0; x < coefficients.Count; x++)
+        //    {
+        //        if (x == coefficients.Count - 1)
+        //        {
+        //            newFunction.Append(coefficients[x] + $"{variable}+");
+        //        }
+        //        else
+        //        {
+        //            newFunction.Append(coefficients[x] + $"{variable}^{coefficients.Count - x}+");
+        //        }
+
+        //    }
+        //    newFunction.Append("C");
+        //    return newFunction.ToString();
+        //}
 
         public static double Summation(double top, double bottom)
         {
@@ -95,13 +106,12 @@ namespace boxMos
                 //Debug.Write(divided[x] + ", ");
             }
             double remainder = divided.Last();
-            List<double> qCoefficients = divided.Take(divided.Count).ToList();
+            List<double> qCoefficients = divided.Take(divided.Count - 1).ToList();
 
             var yea = new List<Term>
             {
                 new PolynomialTerm(qCoefficients)
             };
-
             if (remainder != 0)
             {
                 yea.Add(new RationalTerm(remainder, divideby));
@@ -113,11 +123,22 @@ namespace boxMos
         {
             var stringb = new StringBuilder();
 
-            foreach (Term term in terms)
+            for (int i = 0; i < terms.Count; i++)
             {
-                string b = term.ToMath(var);
+                Term term = terms[i];
+                if (i == terms.Count - 1)
+                {
+                    string b = term.ToMath(var);
 
-                stringb.Append(b);
+                    stringb.Append(b);
+
+                }
+                else 
+                {
+                    string b = term.ToMath(var) + " + ";
+
+                    stringb.Append(b);
+                }
             }
             return stringb.ToString();
         }
@@ -173,6 +194,7 @@ namespace boxMos
             foreach (Term term in terms)
             {
                 sum += term.Eval(x);
+                //Debug.WriteLine(term.ToString() + ", " + sum.ToString());
             }
             return sum;
         }

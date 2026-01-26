@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,8 @@ namespace boxMos.Terms
             double val = 0;
             foreach (var c in coefficients)
             {
-                val = val * x + c;
+                //Debug.WriteLine(string.Join(",", coefficients));
+                val = (val * x) + c;
             }    
             return val;
         }
@@ -45,7 +48,7 @@ namespace boxMos.Terms
                 double absoluteConstant = Math.Abs(c);
                 if (i == 0)
                 {
-                    if (c == 1)
+                    if (c == 1 || c == -1)
                     {
                         if (c < 0)
                         {
@@ -114,7 +117,7 @@ namespace boxMos.Terms
                 }
                 else
                 {
-                    if (c == 1)
+                    if (c == 1 || c == -1)
                     {
 
                         if (power == 1)
@@ -123,7 +126,7 @@ namespace boxMos.Terms
                         }
                         else if (power == 0)
                         {
-                            newPolynomial.Append(" " + sign + " ");
+                            newPolynomial.Append(" " + sign + " " + absoluteConstant);
                         }
                         else
                         {
@@ -138,7 +141,7 @@ namespace boxMos.Terms
                         }
                         else if (power == 0)
                         {
-                            newPolynomial.Append(" " + sign + " ");
+                            newPolynomial.Append(" " + sign + " " + absoluteConstant);
                         }
                         else
                         {

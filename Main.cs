@@ -67,15 +67,17 @@ namespace boxMos
             //PolynomialTerm polynomialTerm = new PolynomialTerm([3,4,5,1,2]);
             //string yea = polynomialTerm.ToMath("x");
             var exp = SyntheticDivision([1, 2, 3], 2);
-            double solved = EvaluatePolynomial(1, exp, 2);
-            string polynomial = ExpressionToString(exp, "x");
+            //double solved = EvaluatePolynomial(1, exp, 2);
+            //string polynomial = ExpressionToString(exp, "x");
             ////string function = ListToPolynomial(exp, "x");
-            //List<double> integral = IndefiniteIntegral(exp, 0.0001);
+            List<Term> integral = IndefiniteIntegral(exp, 0.0001);
             ////var exp = Integral(function)
             //string integralfunc = ListToIIntegral(integral, "x");
+            string polynomial = ExpressionToString(integral, "x");
 
 
-            return /*polynomial + ", indefinite integral = " + integralfunc.ToString()*/polynomial + ", " + solved;
+
+            return /*polynomial + ", indefinite integral = " + integralfunc.ToString()*/polynomial /*+ ", " + solved*/;
         }
 
         protected override void Update(GameTime gameTime)

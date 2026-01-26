@@ -10,9 +10,11 @@ namespace boxMos.Terms
     public class LogarithmTerm : Term
     {
         public List<double> coefficients = new List<double>();
-        public LogarithmTerm(List<double> coefficient) 
+        public Term parameter;
+        public LogarithmTerm(List<double> coefficient, Term parameter) 
         {
             this.coefficients = coefficient;
+            this.parameter = parameter;
         }
 
         public override double Eval(double x)
@@ -45,7 +47,7 @@ namespace boxMos.Terms
                 double absoluteConstant = Math.Abs(c);
                 if (i == 0)
                 {
-                    if (c == 1)
+                    if (c == 1 || c == -1)
                     {
                         if (c < 0)
                         {
@@ -55,7 +57,7 @@ namespace boxMos.Terms
                             }
                             else if (power == 0)
                             {
-                                newPolynomial.Append("-" + c);
+                                //newPolynomial.Append("-" + c);
                             }
                             else
                             {
@@ -70,7 +72,7 @@ namespace boxMos.Terms
                             }
                             else if (power == 0)
                             {
-                                newPolynomial.Append(c);
+                                //newPolynomial.Append(c);
                             }
                             else
                             {
@@ -88,7 +90,7 @@ namespace boxMos.Terms
                             }
                             else if (power == 0)
                             {
-                                newPolynomial.Append("-" + c);
+                                //newPolynomial.Append("-" + c);
                             }
                             else
                             {
@@ -103,7 +105,7 @@ namespace boxMos.Terms
                             }
                             else if (power == 0)
                             {
-                                newPolynomial.Append(c);
+                                //newPolynomial.Append(c);
                             }
                             else
                             {
@@ -114,7 +116,7 @@ namespace boxMos.Terms
                 }
                 else
                 {
-                    if (c == 1)
+                    if (c == 1 || c == -1)
                     {
 
                         if (power == 1)
@@ -149,7 +151,7 @@ namespace boxMos.Terms
                 }
                 i++;
             }
-            return newPolynomial.ToString();
+            return newPolynomial.ToString() + " + C";
         }
     }
 }
