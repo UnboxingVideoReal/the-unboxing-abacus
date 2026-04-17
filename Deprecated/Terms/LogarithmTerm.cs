@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace boxMos.Terms
+namespace boxMos.Deprecated.Terms
 {
     public class LogarithmTerm : Term
     {

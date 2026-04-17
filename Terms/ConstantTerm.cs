@@ -1,31 +1,45 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace boxMos.Terms
 {
-    public class ConstantTerm : Term
+    public abstract class ConstantTerm : Term
     {
-        public string var = "";
-        public ConstantTerm(string var) 
+        public double var { get; set; }
+        public string[] vars { get; set; } = { };
+        public ConstantTerm(double var, string[] vars)
         {
             this.var = var;
+            this.vars = vars;
         }
 
-        public override double Eval(double x)
+        public override double Eval(string vartodefine, double x)
         {
-            double val = 0;
-            return val;
+            string variablee = vars[Array.IndexOf(vars, vartodefine)];
+            // todo: add the variable to the global list of variables faxx
+            if (vars.Length >= 1)
+            {
+                return var * x;
+            }
+            else
+            {
+                return var;
+            }
         }
 
-        public override string ToMath(string var)
+        public override string ToString_x(string[] vars)
         {
-            return var;
+            if (vars.Length >= 1)
+            {
+                return vars[0] + var.ToString();
+            }
+            else
+            {
+                return var.ToString();
+            }
         }
     }
 }

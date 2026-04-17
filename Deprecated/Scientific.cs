@@ -1,0 +1,216 @@
+﻿using boxMos.Deprecated.Terms;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace boxMos.Deprecated
+{
+    internal class Scientific
+    {
+        public static double DefiniteIntegral(Func<double, double> /* in, out ..?*/ f, double top, double bottom, double dx /* see attached image, split the thing into regions */)
+        {
+            double sum = 0;
+            for (double x = bottom; x < top; x++)
+            {
+                sum += f(x) * dx; // think of it as width x height, integral is the ok can vsc ai get out its trying to finish my sentence and STOP DOING THAT like it wants me to say "integral is the sum of the areas of rectangles" which is kinda what i wanted to say and its pmoing me off
+
+            }
+            return sum;
+        }
+        //public static double polynomial_DefiniteIntegral(List<double> polyCoefficients, double polyDivideby, double top, double bottom, double dx /* see attached image, split the thing into regions */)
+        //{
+        //    double sum = 0;
+        //    for (double x = bottom; x < top; x++)
+        //    {
+        //        sum += EvaluatePolynomial(polyCoefficients, polyDivideby, x) * dx; // think of it as width x height, integral is the ok can vsc ai get out its trying to finish my sentence and STOP DOING THAT like it wants me to say "integral is the sum of the areas of rectangles" which is kinda what i wanted to say and its pmoing me off
+
+        //    }
+        //    return sum;
+        //}
+
+        //public static List<Term> IndefiniteIntegral(List<Term> f, double dx) // WE'RE FOCUSING ON THIS. HOW DO YOU GET ALL THE TERMS TOGETHER AND DO TS SHIT
+        //{
+        //    List<double> indefCoefficients = new List<double>();
+
+
+
+        //    List<double> indefCoefficients = new List<double>();
+        //    for (int x = 0; x < f.Count; x++)
+        //    {
+        //        if (f[x] is PolynomialTerm polynomial)
+        //        {
+        //            indefCoefficients.Add(polynomial.coefficients[x] / ((f.Count - x) + 1));
+        //        }
+        //        else if (f[x] is RationalTerm rational)
+        //        {
+        //            indefCoefficients.Add(rational.denominator); // numerator * ln(abs(denominator)) + C
+        //        }
+        //    }
+        //    indefCoefficients.Add(0);
+        //    List<double> qCoefficients = divided.Take(divided.Count - 1).ToList();
+
+        //    var yea = new List<Term>
+        //    {
+        //        new PolynomialTerm(qCoefficients)
+        //    };
+        //    if (remainder != 0)
+        //    {
+        //        yea.Add(new RationalTerm(remainder, divideby));
+        //    }
+        //    yea.Add(new ConstantTerm("C"));
+
+        //    return indefCoefficients;
+        //}
+        //public static string ListToIIntegral(List<double> coefficients, string variable)
+        //{
+        //    StringBuilder newFunction = new StringBuilder();
+        //    for (int x = 0; x < coefficients.Count; x++)
+        //    {
+        //        if (x == coefficients.Count - 1)
+        //        {
+        //            newFunction.Append(coefficients[x] + $"{variable}+");
+        //        }
+        //        else
+        //        {
+        //            newFunction.Append(coefficients[x] + $"{variable}^{coefficients.Count - x}+");
+        //        }
+
+        //    }
+        //    newFunction.Append("C");
+        //    return newFunction.ToString();
+        //}
+
+        public static double Summation(double top, double bottom)
+        {
+            double sum = 0;
+            for (double n = bottom; n <= top; n++)
+            {
+                sum += n;
+            }
+            return sum;
+        }
+        public static List<Term> SyntheticDivision(double[] coefficients, double divideby)
+        {
+            List<double> divided = new List<double>();
+            for (int x = 0; x < coefficients.Length; x++)
+            {
+                if (x == 0)
+                {
+                    divided.Add(coefficients[x]);
+                }
+                else
+                {
+                    divided.Add(divided[x-1] * divideby + coefficients[x]);
+                }
+                //Debug.Write(divided[x] + ", ");
+            }
+            double remainder = divided.Last();
+            List<double> qCoefficients = divided.Take(divided.Count - 1).ToList();
+
+            var yea = new List<Term>
+            {
+                new PolynomialTerm(qCoefficients)
+            };
+            if (remainder != 0)
+            {
+                yea.Add(new RationalTerm(remainder, divideby));
+            }
+            return yea;
+        }
+
+        public static string ExpressionToString(List<Term> terms, string var)
+        {
+            var stringb = new StringBuilder();
+
+            for (int i = 0; i < terms.Count; i++)
+            {
+                Term term = terms[i];
+                if (i == terms.Count - 1)
+                {
+                    string b = term.ToMath(var);
+
+                    stringb.Append(b);
+
+                }
+                else 
+                {
+                    string b = term.ToMath(var) + " + ";
+
+                    stringb.Append(b);
+                }
+            }
+            return stringb.ToString();
+        }
+
+        public static List<Term> Addition(List<Term> terms)
+        {
+            for (int i = 0; i < terms.Count; i++)
+            {
+                Term term = terms[i];
+
+            }
+        }
+
+
+        //public static string ListToPolynomial((PolynomialTerm quotient, double remainder) polynomial, double divideby, string variable)
+        //{
+        //    StringBuilder newPolynomial = new StringBuilder();
+        //    newPolynomial.Append(polynomial.quotient.ToMath(variable));
+        //    if (polynomial.remainder != 0)
+        //    {
+        //        if (divideby < 0)
+        //        {
+        //            newPolynomial.Append($"/({variable}+{-divideby})");
+        //        }
+        //        else
+        //        {
+        //            newPolynomial.Append($"/({variable}-{divideby})");
+        //        }
+        //    }
+        //}
+            //for (int x = 0; x < coefficients.Count; x++)
+            //{
+            //    if (x == coefficients.Count - 1)
+            //    {
+            //        if (coefficients[x] == 0)
+            //        {
+            //            newPolynomial.Append(coefficients[x]);
+            //        }
+            //        else
+            //        {
+            //            newPolynomial.Append(coefficients[x] + $"/{variable}+{-divideby}");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (x == coefficients.Count - 2)
+            //        {
+            //            newPolynomial.Append(coefficients[x] + $"{variable}+");
+            //        }
+            //        else
+            //        {
+            //            newPolynomial.Append(coefficients[x] + $"{variable}^{coefficients.Count - x - 1}+");
+            //        }
+            //    }
+
+            //}
+        //    return newPolynomial.ToString();
+        //}
+
+        public static double EvaluatePolynomial(double x, List<Term> terms, double divideby)
+        {
+            double sum = 0;
+            foreach (Term term in terms)
+            {
+                sum += term.Eval(x);
+                //Debug.WriteLine(term.ToString() + ", " + sum.ToString());
+            }
+            return sum;
+        }
+    }
+}

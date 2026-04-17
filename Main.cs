@@ -8,11 +8,11 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using static boxMos.Scientific;
+using static boxMos.Deprecated.Scientific;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using boxMos.Terms;
+using boxMos.Deprecated.Terms;
 
 
 namespace boxMos
