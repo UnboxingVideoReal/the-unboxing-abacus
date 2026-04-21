@@ -16,22 +16,25 @@ namespace boxMos.Terms
             this.Variables = vars;
         }
 
-        public override double Eval(Tuple<string, double>[] variables)
+        public override Term[] Eval(Tuple<string, double>[] variables)
         {
-            Tuple<string, double> variablee = new Tuple<string, double>("", 0);
+            Tuple<string, double> variablee = new Tuple<string, double>("", 0);//  (variable, value)
+            double[] solved = { }; // all the final DOUBLES that we get from constant * x, or just constant alone. ONLY DOUBLES
+            int solvediteration = 0; // iterate the array
             foreach (Tuple<string, double> v in variables)
             {
                 variablee = Variables[Array.IndexOf(variables, v.Item2)];
+                if (variables.Length >= 1)
+                {
+                    solved[solvediteration] = Coefficient * v.Item2;
+                }
+                else
+                {
+                    return var;
+                }
+                solvediteration += 1;
             }
             // todo: add the variable to the global list of variables faxx
-            if (variables.Length >= 1)
-            {
-                return var * x;
-            }
-            else
-            {
-                return var;
-            }
         }
 
         public override string ToString_x(string[] vars)
