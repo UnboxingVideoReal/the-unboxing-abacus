@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Accessibility;
+using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,33 +10,44 @@ namespace boxMos.Terms
 {
     public abstract class ConstantTerm : Term
     {
-        public override double Coefficient { get; }
-        public override Tuple<string, double>[] Variables { get; } = Array.Empty<Tuple<string, double>>();
-        public ConstantTerm(double var, Tuple<string, double>[] vars)
+        public override double Coefficient { get; set; }
+        public override List<(string, double)> Variables { get; set; } = new List<(string, double)>();
+        public ConstantTerm(double var, List<(string, double)> vars)
         {
             this.Coefficient = var;
             this.Variables = vars;
         }
 
-        public override Term[] Eval(Tuple<string, double>[] variables)
+        public override void Eval(List<(string, double)> variables)
         {
-            Tuple<string, double> variablee = new Tuple<string, double>("", 0);//  (variable, value)
+            (string, double) variablee = ("", 0);//  (variable, value)
+            List<(string, double)> urgrhrguhrgrvariables = variables; // collegeboard wants me to organize my code and have neat names and comments bor im doing that later
             double[] solved = { }; // all the final DOUBLES that we get from constant * x, or just constant alone. ONLY DOUBLES
             int solvediteration = 0; // iterate the array
-            foreach (Tuple<string, double> v in variables)
+            foreach ((string, double) v in variables)
             {
-                variablee = Variables[Array.IndexOf(variables, v.Item2)];
-                if (variables.Length >= 1)
+                variablee = Variables[List.];
+                if (variables.Count >= 1)
                 {
                     solved[solvediteration] = Coefficient * v.Item2;
+                    urgrhrguhrgrvariables
                 }
                 else
                 {
-                    return var;
+                    solved[solvediteration] = Coefficient;
                 }
                 solvediteration += 1;
             }
+            double yayaddedocefficient = 0;
+            for (int i = 0; i < solved.Length; i++)
+            {
+                yayaddedocefficient += solved[i];
+            }
+            this.Coefficient = yayaddedocefficient;
+
+
             // todo: add the variable to the global list of variables faxx
+            // oh wait i can just
         }
 
         public override string ToString_x(string[] vars)

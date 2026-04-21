@@ -13,14 +13,14 @@ namespace boxMos.Terms
         /// </summary>
         /// <returns>double</returns>
         
-        public abstract double Coefficient { get; }
+        public abstract double Coefficient { get; set;  } 
 
         /// <summary>
         /// an array of tuples of mathematical variable names and inputs
         /// </summary>
         /// <returns>an array of strings and doubles</returns>
 
-        public abstract Tuple<string, double>[] Variables { get; }
+        public abstract List<(string, double)> Variables { get; set; }
 
         /// <summary>
         /// boolean to check if the term has any variable at all
@@ -35,7 +35,7 @@ namespace boxMos.Terms
         /// <param name="x">number, value of x</param>
         /// <returns>an expression, or a number</returns>
         
-        public abstract Term[] Eval(Tuple<string, double>[] variables);
+        public abstract void Eval(List<(string, double)> variables);
 
         /// <summary>
         /// translate to string with x
