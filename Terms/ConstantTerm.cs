@@ -8,19 +8,23 @@ namespace boxMos.Terms
 {
     public abstract class ConstantTerm : Term
     {
-        public double var { get; set; }
-        public string[] vars { get; set; } = { };
-        public ConstantTerm(double var, string[] vars)
+        public override double Coefficient { get; }
+        public override Tuple<string, double>[] Variables { get; } = Array.Empty<Tuple<string, double>>();
+        public ConstantTerm(double var, Tuple<string, double>[] vars)
         {
-            this.var = var;
-            this.vars = vars;
+            this.Coefficient = var;
+            this.Variables = vars;
         }
 
-        public override double Eval(string vartodefine, double x)
+        public override double Eval(Tuple<string, double>[] variables)
         {
-            string variablee = vars[Array.IndexOf(vars, vartodefine)];
+            Tuple<string, double> variablee = new Tuple<string, double>("", 0);
+            foreach (Tuple<string, double> v in variables)
+            {
+                variablee = Variables[Array.IndexOf(variables, v.Item2)];
+            }
             // todo: add the variable to the global list of variables faxx
-            if (vars.Length >= 1)
+            if (variables.Length >= 1)
             {
                 return var * x;
             }
