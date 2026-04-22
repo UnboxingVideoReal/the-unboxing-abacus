@@ -43,6 +43,6 @@ namespace boxMos.Terms
         /// <param name="var">variable, like x</param>
         /// <returns></returns>
         
-        public abstract string ToString_x(string[] vars);
+        public abstract string ToString_x();
     }
 }

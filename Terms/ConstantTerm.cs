@@ -26,11 +26,11 @@ namespace boxMos.Terms
             int solvediteration = 0; // iterate the array
             foreach ((string, double) v in variables)
             {
-                variablee = Variables[List.];
+                variablee = Variables[variables.IndexOf(v)];
                 if (variables.Count >= 1)
                 {
                     solved[solvediteration] = Coefficient * v.Item2;
-                    urgrhrguhrgrvariables
+                    urgrhrguhrgrvariables.Remove(v);
                 }
                 else
                 {
@@ -50,15 +50,20 @@ namespace boxMos.Terms
             // oh wait i can just
         }
 
-        public override string ToString_x(string[] vars)
+        public override string ToString_x()
         {
-            if (vars.Length >= 1)
+            string combinedexpression = "";
+            if (Variables.Count >= 1)
             {
-                return vars[0] + var.ToString();
+                foreach ((string, double) var in Variables)
+                {
+                    combinedexpression += var.Item1.ToString() + " + ";
+                }
+                return combinedexpression + Coefficient.ToString();
             }
             else
             {
-                return var.ToString();
+                return Coefficient.ToString();
             }
         }
     }
