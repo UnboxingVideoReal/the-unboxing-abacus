@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace boxMos.Terms
 {
-    public abstract class ConstantTerm : Term
+    public class ConstantTerm : Term
     {
         public override double Coefficient { get; set; }
         public override List<(string, double)> Variables { get; set; } = new List<(string, double)>();
+
+        public override bool HasVariable { get; set; }
         public ConstantTerm(double var, List<(string, double)> vars)
         {
             this.Coefficient = var;
             this.Variables = vars;
+            this.HasVariable = vars.Any();
         }
 
         public override void Eval(List<(string, double)> variables)

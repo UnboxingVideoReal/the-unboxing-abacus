@@ -27,7 +27,7 @@ namespace boxMos.Terms
         /// </summary>
         /// <returns>true if 1 or more variable, false if not</returns>
         
-        public abstract bool HasVariable { get; }
+        public abstract bool HasVariable { get; set; }
 
         /// <summary>
         /// calculate as if x was replaced with number
