@@ -8,11 +8,11 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using static boxMos.Deprecated.Scientific;
+using static boxMos.Scientific;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using boxMos.Deprecated.Terms;
+using boxMos.Terms;
 
 
 namespace boxMos
@@ -62,33 +62,38 @@ namespace boxMos
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
         }
+        // test expression, not the final
         public string testExpression()
         {
-            ////PolynomialTerm polynomialTerm = new PolynomialTerm([3,4,5,1,2]);
-            ////string yea = polynomialTerm.ToMath("x");
-            //var exp = SyntheticDivision([1, 2, 3], 2);
-            ////double solved = EvaluatePolynomial(1, exp, 2);
-            ////string polynomial = ExpressionToString(exp, "x");
-            //////string function = ListToPolynomial(exp, "x");
-            ////List<Term> integral = IndefiniteIntegral(exp, 0.0001);
-            //////var exp = Integral(function)
-            ////string integralfunc = ListToIIntegral(integral, "x");
-            //string polynomial = ExpressionToString(integral, "x");
-
-
-
-            //return /*polynomial + ", indefinite integral = " + integralfunc.ToString()*/polynomial /*+ ", " + solved*/;
-            return "";
+            // add terms, right now i just have 1 term to show
+            List<(Term, string)> test = Addition(
+                [
+                    new ConstantTerm(
+                        2, 
+                        [("x", (double)2)]
+                    )
+                ]
+            );
+            // convert to a presentable string and return it
+            string stringify = string.Empty;
+            foreach ((Term, string) term in test)
+            {
+                stringify += ((ConstantTerm)term.Item1).ToString_x() + " + ";
+            }
+            return stringify;
         }
 
         protected override void Update(GameTime gameTime)
         {
+            // exiting & set up key array
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
             Keys[] key = Keyboard.GetState().GetPressedKeys();
+            // print a test expression to the console
             Debug.WriteLine(testExpression());
+            // typing stuff
             if (Keyboard.GetState().GetPressedKeys().Length > 0)
             {
                 if (key[0] != previousKey)

@@ -147,14 +147,14 @@ namespace boxMos.Deprecated
             return stringb.ToString();
         }
 
-        public static List<Term> Addition(List<Term> terms)
-        {
-            for (int i = 0; i < terms.Count; i++)
-            {
-                Term term = terms[i];
+        //public static List<Term> Addition(List<Term> terms)
+        //{
+        //    for (int i = 0; i < terms.Count; i++)
+        //    {
+        //        Term term = terms[i];
 
-            }
-        }
+        //    }
+        //}
 
 
         //public static string ListToPolynomial((PolynomialTerm quotient, double remainder) polynomial, double divideby, string variable)

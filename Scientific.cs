@@ -9,7 +9,7 @@ namespace boxMos
 {
     public class Scientific
     {
-        public static List<Term> Addition(List<Term> terms) // 2 + 2 + x 
+        public static List<(Term, string)> Addition(List<Term> terms) // 2 + 2 + x 
         {
             List<(Term, string)> added = new List<(Term, string)>();
 
@@ -35,6 +35,7 @@ namespace boxMos
                 
             }
 
+            return added;
 
             //for (int i = 0; i < terms.Count; i++)
             //{
@@ -55,8 +56,6 @@ namespace boxMos
             //    //    likeTerm_Constant = (added[i] as ConstantTerm).var + (added[i + 1] as ConstantTerm).var;
             //    //}
             //}
-
-            return added;
         }
     }
 }

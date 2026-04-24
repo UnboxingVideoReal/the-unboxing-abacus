@@ -11,6 +11,7 @@ namespace boxMos.Terms
     public class ConstantTerm : Term
     {
         public override double Coefficient { get; set; }
+        // variables their name and their valuie if they have one
         public override List<(string, double)> Variables { get; set; } = new List<(string, double)>();
 
         public override bool HasVariable { get; set; }
@@ -23,9 +24,10 @@ namespace boxMos.Terms
 
         public override void Eval(List<(string, double)> variables)
         {
-            (string, double) variablee = ("", 0);//  (variable, value)
-            List<(string, double)> urgrhrguhrgrvariables = variables; // collegeboard wants me to organize my code and have neat names and comments bor im doing that later
-            double[] solved = { }; // all the final DOUBLES that we get from constant * x, or just constant alone. ONLY DOUBLES
+            (string, double) variablee = ("", 0);
+            List<(string, double)> urgrhrguhrgrvariables = variables; 
+            // all defined doubles
+            double[] solved = { };
             int solvediteration = 0; // iterate the array
             foreach ((string, double) v in variables)
             {
@@ -47,10 +49,6 @@ namespace boxMos.Terms
                 yayaddedocefficient += solved[i];
             }
             this.Coefficient = yayaddedocefficient;
-
-
-            // todo: add the variable to the global list of variables faxx
-            // oh wait i can just
         }
 
         public override string ToString_x()
