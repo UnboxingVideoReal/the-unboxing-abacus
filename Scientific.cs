@@ -1,34 +1,32 @@
 ﻿using boxMos.Terms;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace boxMos
 {
     public class Scientific
     {
-        public static List<(Term, string)> Addition(List<Term> terms) // 2x + x + 3 + 7
+        public static List<(Term, string, double)> Addition(List<Term> terms) // 2x + x + 3 + 7
         {
-            List<(Term, string)> added = new List<(Term, string)>();
-            List<double> definedvar = new List<double>(); 
+            List<(Term, string, double)> added = new List<(Term, string, double)>();
 
 
             int son = 0;
             foreach (Term term in terms)
             {
+                Debug.WriteLine(term.ToString_x());
                 if (term.HasVariable)
                 {
-                    added.Add((term, term.Variables.ToList()[son].Item1));
-                    definedvar.Add(term.Variables.ToList()[son].Item2);
+                    
+                    added.Add((term, term.Variables.ToList()[son].Item1, term.Variables.ToList()[son].Item2));
                 }
                 else
                 {
-                    added.Add((term, ""));
-                    definedvar.Add(1);
+                    added.Add((term, "", 1));
                 }
+                Debug.WriteLine(added[son]);
+
                 son++;
             } // 2x, x, 3, 7 -> (2x, "x"), (x, "x"), (3, ""), (7, "")
             added = added.OrderBy(t => t.Item2).ToList(); // 2x + x + 3 + 7 / 3 + 7 + 2x + x
@@ -44,18 +42,23 @@ namespace boxMos
                 {
                     listofvars.Add(added[i].Item2);
                 }
-            }
+                Debug.WriteLine(listofvars[i]);
+            } // "", "x"
 
-            List<(ConstantTerm, string)> finalAdded = new List<(ConstantTerm, string)>();
+            List<(ConstantTerm, string, double)> finalAdded = new List<(ConstantTerm, string, double)>();
+            List<(Term, string, double)> actualFinal = new List<(Term, string, double)>();
+
             foreach (string var in listofvars)
             {
-                for (int i = added.FindIndex(t => t.Item2 == var); i < added.FindLastIndex(t => t.Item2 == var); i++) // now that we have the list of terms ordered by variable, we now split that list into chunks of varibales. eg: line 30 becomes { 2x, x } and { 3, 7 }.
+                Debug.WriteLine(var);
+                for (int i = added.FindIndex(t => t.Item2 == var); i < added.FindLastIndex(t => t.Item2 == var); i++) // select all the terms that have this variable. if you have 3x + x + 2x + 7, itll eperate into 2 lists, { 3x, x, 2x } and { 7 }
                 {
-                    finalAdded.Add((added[i].Item1 as ConstantTerm, added[i].Item2));
+                    finalAdded.Add((added[i].Item1 as ConstantTerm, added[i].Item2, added[i].Item3));
+                    Debug.WriteLine(finalAdded[i]);
                 }
-                for (int tung = 0; tung < finalAdded.Count; tung++)
+                for (int tung = 0; tung < finalAdded.Count; tung++) // this is adding them up, probablly gonna erase finalAdded and have a different final variable
                 {
-                    ConstantTerm sahur;
+                    ConstantTerm sahur = finalAdded[tung].Item1;
                     if (finalAdded[tung].Item2 == "")
                     {
                         if (tung == 0)
@@ -64,14 +67,33 @@ namespace boxMos
                         }
                         else
                         {
-                            sahur = new ConstantTerm(finalAdded[tung].Item1.Coefficient + sahur.Coefficient, [("", definedvar[tung])]);
+                            sahur = new ConstantTerm(finalAdded[tung].Item1.Coefficient + sahur.Coefficient, [("", finalAdded[tung].Item3)]);
                         }
                     }
+                    else
+                    {
+                        if (tung == 0)
+                        {
+                            sahur = finalAdded[tung].Item1;
+                        }
+                        else
+                        {
+                            sahur = new ConstantTerm(finalAdded[tung].Item1.Coefficient + sahur.Coefficient, [(finalAdded[tung].Item2, finalAdded[tung].Item3)]);
+                        }
+
+                    }
+
+                    if (tung == finalAdded.Count - 1)
+                    {
+                        actualFinal.Add((sahur, finalAdded[tung].Item2, finalAdded[tung].Item3));
+                    }
+                    Debug.WriteLine(actualFinal[tung]);
                 }
+                finalAdded.Clear();
             }
 
-
-            return added;
+            Debug.WriteLine(actualFinal);
+            return actualFinal;
 
             //for (int i = 0; i < terms.Count; i++)
             //{

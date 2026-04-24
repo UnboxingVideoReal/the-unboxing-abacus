@@ -58,9 +58,16 @@ namespace boxMos.Terms
             {
                 foreach ((string, double) var in Variables)
                 {
-                    combinedexpression += var.Item1.ToString() + " + ";
+                    if (var.Item1 == "")
+                    {
+                        
+                    }
+                    else
+                    {
+                        combinedexpression += var.Item1.ToString();
+                    }
                 }
-                return combinedexpression + Coefficient.ToString();
+                return Coefficient.ToString() + combinedexpression;
             }
             else
             {

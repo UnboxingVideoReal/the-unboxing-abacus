@@ -66,17 +66,21 @@ namespace boxMos
         public string testExpression()
         {
             // add terms, right now i just have 1 term to show
-            List<(Term, string)> test = Addition(
+            List<(Term, string, double)> test = Addition(
                 [
                     new ConstantTerm(
                         2, 
-                        [("x", (double)2)]
+                        [("x", (double)1)]
+                    ),
+                    new ConstantTerm(
+                        7,
+                        [("", (double)1)]
                     )
                 ]
             );
             // convert to a presentable string and return it
             string stringify = string.Empty;
-            foreach ((Term, string) term in test)
+            foreach ((Term, string, double) term in test)
             {
                 stringify += ((ConstantTerm)term.Item1).ToString_x() + " + ";
             }
